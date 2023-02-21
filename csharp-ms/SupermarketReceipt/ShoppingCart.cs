@@ -4,8 +4,8 @@ namespace SupermarketReceipt
 {
     public class ShoppingCart
     {
-        private readonly List<ProductQuantity> _items = new List<ProductQuantity>();
-        private readonly Dictionary<Product, double> _productQuantities = new Dictionary<Product, double>();
+        public List<ProductQuantity> _items = new List<ProductQuantity>();
+        public Dictionary<Product, double> _productQuantities = new Dictionary<Product, double>();
 
 
         public List<ProductQuantity> GetItems()
