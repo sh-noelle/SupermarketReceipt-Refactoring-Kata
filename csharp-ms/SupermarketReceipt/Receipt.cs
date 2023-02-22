@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace SupermarketReceipt
@@ -12,7 +13,7 @@ namespace SupermarketReceipt
             var total = 0.0;
             foreach (var item in _items) total += item.TotalPrice;
             foreach (var discount in _discounts) total += discount.DiscountAmount;
-            return total;
+            return Math.Round(total,3);
         }
 
         public void AddProduct(Product p, double quantity, double price, double totalPrice)
