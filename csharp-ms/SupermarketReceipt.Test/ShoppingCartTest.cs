@@ -11,23 +11,36 @@ namespace SupermarketReceipt.Test
     {
         private readonly ITestOutputHelper _output;
         private ShoppingCart _shoppingCart;
+        private Receipt _receipt;
         private List<ProductQuantity> _mockItems;
         private Dictionary<Product, double> _mockProductQuantities;
-        
+        private Dictionary<Product, Offer> _mockOffer;
+        private List<ReceiptItem> _mockReceiptItemList;
+
+
         public ShoppingCartTest(ITestOutputHelper output)
         {
             _output = output;
             _shoppingCart = new ShoppingCart();
+            _receipt = new Receipt();
             _mockItems = new List<ProductQuantity> 
             {
             new ProductQuantity(new Product("apple",ProductUnit.Kilo), 1.4),
             new ProductQuantity(new Product("watermelon",ProductUnit.Each), 2.0),
             new ProductQuantity(new Product("banana",ProductUnit.Kilo), 1.5),
             };
+
             _mockProductQuantities = new Dictionary<Product, double>();
             _mockProductQuantities.Add(new Product("apple", ProductUnit.Kilo), 1.4);
             _mockProductQuantities.Add(new Product("watermelon", ProductUnit.Each), 2.0);
             _mockProductQuantities.Add(new Product("banana", ProductUnit.Kilo), 1.5);
+
+            _mockOffer = new Dictionary<Product, Offer>();
+            _mockOffer.Add(new Product("icecream", ProductUnit.Each), new Offer(SpecialOfferType.TenPercentDiscount, new Product("icecream", ProductUnit.Each), 1.0));
+            _mockOffer.Add(new Product("cream puff", ProductUnit.Each), new Offer(SpecialOfferType.ThreeForTwo, new Product("cream puff", ProductUnit.Each), 5.0));
+            _mockOffer.Add(new Product("souffle", ProductUnit.Each), new Offer(SpecialOfferType.TwoForAmount, new Product("souffle", ProductUnit.Each), 2.0));
+
+            _mockReceiptItemList = new List<ReceiptItem>();
         }
 
         public static IEnumerable<object[]> AddItemQuantity_Condition1() 
@@ -99,6 +112,16 @@ namespace SupermarketReceipt.Test
             _output.WriteLine($"_shoppingCart._productQuantities[product]: {_shoppingCart._productQuantities[product]}");
             //assert
             Assert.Equal(quantity, _shoppingCart._productQuantities[product]);
+        }
+
+        [Fact]
+        public void ShoppingCart_HandleOffers() 
+        {
+            //arrange
+            // receipt, offers, catalog
+            //action
+            //_shoppingCart.HandleOffers();
+            //assert
         }
     }
 }

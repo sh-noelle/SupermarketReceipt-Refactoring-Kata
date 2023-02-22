@@ -4,8 +4,10 @@ namespace SupermarketReceipt
     {
         ThreeForTwo,
         TenPercentDiscount,
+        TwentyPercentDiscount,
         TwoForAmount,
-        FiveForAmount
+        FiveForAmount,
+        GetOneFree,
     }
 
     public class Offer

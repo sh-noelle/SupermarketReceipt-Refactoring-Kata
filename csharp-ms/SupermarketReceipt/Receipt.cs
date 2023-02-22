@@ -4,8 +4,8 @@ namespace SupermarketReceipt
 {
     public class Receipt
     {
-        private readonly List<Discount> _discounts = new List<Discount>();
-        private readonly List<ReceiptItem> _items = new List<ReceiptItem>();
+        public readonly List<Discount> _discounts = new List<Discount>();
+        public readonly List<ReceiptItem> _items = new List<ReceiptItem>();
 
         public double GetTotalPrice()
         {
