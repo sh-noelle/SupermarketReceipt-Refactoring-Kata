@@ -352,7 +352,7 @@ namespace SupermarketReceipt.Test
             var unitPrice = 0.69;
             var quantity = testedQuantity;
             var expectedDiscount = 0.90;
-            var expectedTotalPrice = Math.Round(0.99 * (quantity / 2) + (quantity % 2) * unitPrice, 3); 
+            var expectedTotalPrice = Math.Round(0.99 * Math.Floor((double)quantity / 2) + (quantity % 2) * unitPrice, 3); 
             // the calculation bases on the sequence of if/else statement in HandleOffers method 
             // TwoForAmount -> TenPercentDiscount
 
@@ -390,7 +390,7 @@ namespace SupermarketReceipt.Test
             var unitPrice = 0.69;
             var quantity = testedQuantity;
             var expectedDiscount = 0.90;
-            var expectedTotalPrice = Math.Round(1.65 * (quantity / 5) + (quantity % 5) * unitPrice, 3);
+            var expectedTotalPrice = Math.Round(1.65 * Math.Floor((double)quantity / 5) + (quantity % 5) * unitPrice, 3);
             // the calculation bases on the sequence of if/else statement in HandleOffers method 
             // FiveForAmount -> TenPercentDiscount
 
@@ -428,7 +428,7 @@ namespace SupermarketReceipt.Test
             var unitPrice = 0.69;
             var quantity = testedQuantity;
             var expectedDiscount = 0.90;
-            var expectedTotalPrice = Math.Round(1.65 * (quantity / 5) + (quantity % 5) * unitPrice,3);
+            var expectedTotalPrice = Math.Round(1.65 * Math.Floor((double)quantity / 5) + (quantity % 5) * unitPrice,3);
             // the calculation bases on the sequence of if/else statement in HandleOffers method 
             // FiveForAmount -> TwoForAmount
 
@@ -466,7 +466,7 @@ namespace SupermarketReceipt.Test
             var unitPrice = 0.69;
             var quantity = testedQuantity;
             var expectedDiscount = 0.90;
-            var expectedTotalPrice = Math.Round(1.65 * (quantity / 5) + (quantity % 5) * unitPrice, 3);
+            var expectedTotalPrice = Math.Round(1.65 * Math.Floor((double)quantity / 5) + (quantity % 5) * unitPrice, 3);
             // the calculation bases on the sequence of if/else statement in HandleOffers method 
             // FiveForAmount -> TwoForAmount/ TenPercentDiscount
 
@@ -518,7 +518,7 @@ namespace SupermarketReceipt.Test
             var quantityOfLemon = testedQ2;
             var expectedDiscount = 0.90;
             var expectedTotalPrice = Math.Round(unitPriceOfOrange * quantityOfOrange * expectedDiscount 
-                                    + 1.05 * (quantityOfLemon / 2) + (quantityOfLemon % 2) * unitPriceOfLemon,3);
+                                    + 1.05 * Math.Floor((double)quantityOfLemon / 2) + (quantityOfLemon % 2) * unitPriceOfLemon,3);
 
             // automatically round up to 3 decimal places
             // no blocking on cases like [1, 1] or [12,1]
@@ -575,7 +575,7 @@ namespace SupermarketReceipt.Test
             var quantityOfLemon = testedQ2;
             var expectedDiscount = 0.90;
             var expectedTotalPrice = Math.Round(unitPriceOfOrange * quantityOfOrange * expectedDiscount
-                                    + 3.05 * (quantityOfLemon / 5) + (quantityOfLemon % 5) * unitPriceOfLemon, 3);
+                                    + 3.05 * Math.Floor((double)quantityOfLemon / 5) + (quantityOfLemon % 5) * unitPriceOfLemon, 3);
 
             // automatically round up to 3 decimal places
             // no blocking on cases like [1, 1] or [12,1]
@@ -631,8 +631,8 @@ namespace SupermarketReceipt.Test
             var quantityOfOrange = testedQ1;
             var quantityOfLemon = testedQ2;
             var expectedDiscount = 0.90;
-            var expectedTotalPrice = Math.Round(4.0 * (quantityOfOrange / 5) + (quantityOfOrange % 5) * unitPriceOfOrange
-                                    + 1.05 * (quantityOfLemon / 2) + (quantityOfLemon % 2) * unitPriceOfLemon, 3);
+            var expectedTotalPrice = Math.Round(4.0 * Math.Floor((double)quantityOfOrange / 5) + (quantityOfOrange % 5) * unitPriceOfOrange
+                                    + 1.05 * Math.Floor((double)quantityOfLemon / 2) + (quantityOfLemon % 2) * unitPriceOfLemon, 3);
 
             // automatically round up to 3 decimal places
             // no blocking on cases like [1, 5], [1, 1] or [12,1]
@@ -688,8 +688,8 @@ namespace SupermarketReceipt.Test
             var quantityOfOrange = testedQ1;
             var quantityOfLemon = testedQ2;
             var expectedDiscount = 0.90;
-            var expectedTotalPrice = Math.Round(1.02 * (quantityOfOrange / 2) + (quantityOfOrange % 2) * unitPriceOfOrange
-                                    + 3.05 * (quantityOfLemon / 5) + (quantityOfLemon % 5) * unitPriceOfLemon, 3);
+            var expectedTotalPrice = Math.Round(1.02 * Math.Floor((double)quantityOfOrange / 2) + (quantityOfOrange % 2) * unitPriceOfOrange
+                                    + 3.05 * Math.Floor((double)quantityOfLemon / 5) + (quantityOfLemon % 5) * unitPriceOfLemon, 3);
             // automatically round up to 3 decimal places
             // no blocking on cases like [1, 5], [1, 1] or [12,1]
 
@@ -706,7 +706,7 @@ namespace SupermarketReceipt.Test
             var receiptItem = receipt.GetItems()[0];
             var receiptItem2 = receipt.GetItems()[1];
 
-            _output.WriteLine($"receiptItem.TotalPrice: {receipt.GetTotalPrice()}; expectedTotalPrice: {expectedTotalPrice} ");
+            _output.WriteLine($"receiptItem.TotalPrice: {receipt.GetTotalPrice()}; expectedTotalPrice: {expectedTotalPrice}");
 
             // ASSERT
             Assert.Equal(orange, receiptItem.Product);
@@ -745,8 +745,8 @@ namespace SupermarketReceipt.Test
             var quantityOfOrange = testedQ1;
             var quantityOfLemon = testedQ2;
             var expectedDiscount = 0.90;
-            var expectedTotalPrice = Math.Round(1.02 * (quantityOfOrange / 2) + (quantityOfOrange % 2) * unitPriceOfOrange
-                                    + 3.05 * (quantityOfLemon / 5) + (quantityOfLemon % 5) * unitPriceOfLemon, 3);
+            var expectedTotalPrice = Math.Round(1.02 * Math.Floor((double)quantityOfOrange / 2) + (quantityOfOrange % 2) * unitPriceOfOrange
+                                    + 3.05 * Math.Floor((double)quantityOfLemon / 5) + (quantityOfLemon % 5) * unitPriceOfLemon, 3);
             // automatically round up to 3 decimal places
             // no blocking on cases like [1, 5], [1, 1] or [12,1]
 
