@@ -7,7 +7,7 @@ namespace SupermarketReceipt.OfferTypes
 {
     public class NoDiscountHandler : OfferHandlerBase
     {
-        public override void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, int quantity, SupermarketCatalog catalog)
+        public override void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, double quantity, SupermarketCatalog catalog)
         {
             var offer = specialOffers[product];
             if (offer.OfferType == SpecialOfferCategories.NoDiscount) 

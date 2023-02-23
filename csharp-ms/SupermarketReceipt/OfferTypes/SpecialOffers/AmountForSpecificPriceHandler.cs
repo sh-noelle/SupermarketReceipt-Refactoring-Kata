@@ -7,13 +7,13 @@ namespace SupermarketReceipt.OfferTypes.SpecialOffers
 {
     public class AmountForSpecificPriceHandler : OfferHandlerBase
     {
-        public override void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, int quantity, SupermarketCatalog catalog)
+        public override void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, double quantity, SupermarketCatalog catalog)
         {
             var offer = specialOffers[product];
             if (offer.OfferType == SpecialOfferCategories.AmountForSpecificPrice)
             {
                 var unitPrice = catalog.GetUnitPrice(product);
-                var groupedProduct = quantity / offer.SizeOfGrouping;
+                var groupedProduct = Math.Floor(quantity / offer.SizeOfGrouping);
                 var nonGroupedProduct = quantity % offer.SizeOfGrouping;
                 var totalPrice = offer.SellingPrice * groupedProduct + unitPrice * nonGroupedProduct;
                 var markedPrice = unitPrice * quantity;
