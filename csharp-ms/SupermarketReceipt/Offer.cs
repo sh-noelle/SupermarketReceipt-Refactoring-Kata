@@ -10,6 +10,13 @@ namespace SupermarketReceipt
         GetOneFree,
     }
 
+    public enum SpecialOfferCategories
+    {
+        BuyItemsGetItemsFree,
+        SpecificPercentDiscount,
+        AmountForSpecificPrice,
+    }
+
     public class Offer
     {
         private Product _product;
