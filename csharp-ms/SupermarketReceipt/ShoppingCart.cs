@@ -1,4 +1,5 @@
-using SupermarketReceipt.SpecialOfferTypes;
+using SupermarketReceipt.OfferTypes.SpecialOffers;
+using SupermarketReceipt.OfferTypes;
 using System;
 using System.Collections.Generic;
 
@@ -8,14 +9,6 @@ namespace SupermarketReceipt
     {
         public List<ProductQuantity> _items = new List<ProductQuantity>();
         public Dictionary<Product, double> _productQuantities = new Dictionary<Product, double>();
-        //public List<SpecialOfferModel> _specialOfferList = new List<SpecialOfferModel> 
-        //{
-        //     new SpecialOfferModel{ OfferType = SpecialOfferCategories.TenPercentDiscount, GroupingNumber = 1, Labelling = "10% off Discount" },
-        //     new SpecialOfferModel{ OfferType = SpecialOfferCategories.TwentyPercentDiscount, GroupingNumber = 1, Labelling = "20% off Discount"},
-        //     new SpecialOfferModel{ OfferType = SpecialOfferCategories.GetOneFree, GroupingNumber = 2, Labelling = "Buy one get one free"},
-        //     new SpecialOfferModel{ OfferType = SpecialOfferCategories.TwoForAmount, GroupingNumber = 2, Labelling = "Buy two for"},
-        //     new SpecialOfferModel{ OfferType = SpecialOfferCategories.FiveForAmount, GroupingNumber = 5, Labelling = "Buy five for"},
-        //};
 
         public ShoppingCart() 
         {
@@ -54,11 +47,13 @@ namespace SupermarketReceipt
             var buyOneGetOneHandler = new BuyItemsGetItemsFreeHandler();
             var tenPercentDiscountHandler = new SpecificPercentDiscountHandler();
             var twentyPercentDiscountHandler = new SpecificPercentDiscountHandler();
+            var noDiscountHandler = new NoDiscountHandler();
 
             fiveItemsForSaleHandler.SetNext(twoItemsForSaleHandler);
             twoItemsForSaleHandler.SetNext(buyOneGetOneHandler);
             buyOneGetOneHandler.SetNext(twentyPercentDiscountHandler);
             twentyPercentDiscountHandler.SetNext(tenPercentDiscountHandler);
+            tenPercentDiscountHandler.SetNext(noDiscountHandler);
 
         foreach (var product in _productQuantities.Keys)
         {

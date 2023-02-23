@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SupermarketReceipt.SpecialOfferTypes
+namespace SupermarketReceipt.OfferTypes
 {
-    public abstract class OfferHandler
+    public abstract class OfferHandlerBase
     {
         //public abstract Discount getDiscount(int sizeOfGrouping, double discountRate, double sellingPrice);
-        public OfferHandler next;
-        public void SetNext(OfferHandler next)
+        public OfferHandlerBase next;
+        public void SetNext(OfferHandlerBase next)
         {
             this.next = next;
         }

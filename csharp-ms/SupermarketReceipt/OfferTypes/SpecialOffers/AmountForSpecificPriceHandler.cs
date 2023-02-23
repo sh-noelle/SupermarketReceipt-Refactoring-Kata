@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace SupermarketReceipt.SpecialOfferTypes
+namespace SupermarketReceipt.OfferTypes.SpecialOffers
 {
-    public class AmountForSpecificPriceHandler:OfferHandler
+    public class AmountForSpecificPriceHandler : OfferHandlerBase
     {
         public override void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, int quantity, SupermarketCatalog catalog)
         {

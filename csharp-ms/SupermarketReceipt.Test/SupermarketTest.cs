@@ -20,6 +20,7 @@ namespace SupermarketReceipt.Test
         private SpecialOfferCategories _twentyPercentDiscount = SpecialOfferCategories.SpecificPercentDiscount;
         private SpecialOfferCategories _twoItemsForSale = SpecialOfferCategories.AmountForSpecificPrice;
         private SpecialOfferCategories _fiveItemsForSale = SpecialOfferCategories.AmountForSpecificPrice;
+        private SpecialOfferCategories _noDiscount = SpecialOfferCategories.NoDiscount;
         public SupermarketTest(ITestOutputHelper output) 
         {
             _output = output;
@@ -41,7 +42,7 @@ namespace SupermarketReceipt.Test
 
             _catalog.AddProduct(toothBrush, unitPrice);
             _cart.AddItemQuantity(toothBrush, quantity);
-            _teller.AddSpecialOffer(_buyOneGetOneFree, toothBrush, 2, 0, 1.50);
+            _teller.AddSpecialOffer(_buyOneGetOneFree, toothBrush, 2, 0, 0.99);
 
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);
@@ -52,7 +53,7 @@ namespace SupermarketReceipt.Test
             // ASSERT
             Assert.Equal(toothBrush, receiptItem.Product);
             Assert.Equal(unitPrice, receiptItem.Price);
-            Assert.Equal(expectedTotalPrice, receiptItem.TotalPrice);
+            Assert.Equal(expectedTotalPrice, receipt.GetTotalPrice());
             Assert.Equal(quantity, receiptItem.Quantity);
         }
 
@@ -73,11 +74,12 @@ namespace SupermarketReceipt.Test
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);
             var receiptItem = receipt.GetItems()[0];
+            _output.WriteLine($"receiptItem.TotalPrice: {receipt.GetTotalPrice()}; expectedTotalPrice: {expectedTotalPrice} ");
 
             // ASSERT
             Assert.Equal(apples, receiptItem.Product);
             Assert.Equal(unitPrice, receiptItem.Price);
-            Assert.Equal(expectedTotalPrice , receiptItem.TotalPrice);
+            Assert.Equal(expectedTotalPrice, receipt.GetTotalPrice());
             Assert.Equal(quantity, receiptItem.Quantity);
 
         }
@@ -285,7 +287,7 @@ namespace SupermarketReceipt.Test
 
             _catalog.AddProduct(orange, unitPriceOfOrange);
             _cart.AddItemQuantity(orange, quantityOfOrange);
-
+            _teller.AddSpecialOffer(_noDiscount, orange, 1, 0, 0);
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);
             var receiptItem = receipt.GetItems()[0];
@@ -316,7 +318,8 @@ namespace SupermarketReceipt.Test
             _catalog.AddProduct(lemon, unitPriceOfLemon);
             _cart.AddItemQuantity(orange, quantityOfOrange);
             _cart.AddItemQuantity(lemon, quantityOfLemon);
-
+            _teller.AddSpecialOffer(_noDiscount, orange, 1, 0, 0);
+            _teller.AddSpecialOffer(_noDiscount, lemon, 1, 0, 0);
 
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);

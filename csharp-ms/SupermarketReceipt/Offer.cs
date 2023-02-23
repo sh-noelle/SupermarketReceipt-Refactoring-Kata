@@ -5,6 +5,7 @@ namespace SupermarketReceipt
         BuyItemsGetItemsFree,
         SpecificPercentDiscount,
         AmountForSpecificPrice,
+        NoDiscount
     }
 
     public class Offer

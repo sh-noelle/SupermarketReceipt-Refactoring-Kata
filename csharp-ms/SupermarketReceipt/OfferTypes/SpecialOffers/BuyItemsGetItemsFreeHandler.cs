@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace SupermarketReceipt.SpecialOfferTypes
+namespace SupermarketReceipt.OfferTypes.SpecialOffers
 {
-    public class BuyItemsGetItemsFreeHandler: OfferHandler
+    public class BuyItemsGetItemsFreeHandler : OfferHandlerBase
     {
         public override void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, int quantity, SupermarketCatalog catalog)
         {
@@ -17,11 +17,11 @@ namespace SupermarketReceipt.SpecialOfferTypes
                 var nonGroupedProduct = quantity % offer.SizeOfGrouping;
 
                 var markedPrice = unitPrice * quantity;
-                var totalPrice = offer.SellingPrice * groupedProduct + unitPrice * nonGroupedProduct;
+                var totalPrice = unitPrice * groupedProduct + unitPrice * nonGroupedProduct;
                 var discount = markedPrice - totalPrice;
                 var discountStatement = new DiscountStatement(
-                    product, 
-                    $"{offer.SizeOfGrouping} for {offer.SellingPrice}", 
+                    product,
+                    $"{offer.SizeOfGrouping} for {offer.SellingPrice}",
                     discount * -1
                     );
 
@@ -29,7 +29,7 @@ namespace SupermarketReceipt.SpecialOfferTypes
             }
             else
             {
-                next.HandleOffer(receipt,specialOffers, product, quantity, catalog);
+                next.HandleOffer(receipt, specialOffers, product, quantity, catalog);
             }
         }
     }
