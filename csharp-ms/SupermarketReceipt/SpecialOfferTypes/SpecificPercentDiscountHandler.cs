@@ -1,19 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace SupermarketReceipt.SpecialOfferTypes
 {
     public class SpecificPercentDiscountHandler:OfferHandler
     {
-        public override void HandleOffer(Receipt receipt, Product product, int quantity, SupermarketCatalog catalog)
+        public override void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, int quantity, SupermarketCatalog catalog)
         {
-            if () 
+            var offer = specialOffers[product];
+            if (offer.OfferType == SpecialOfferCategories.SpecificPercentDiscount) 
             {
+                var unitPrice = catalog.GetUnitPrice(product);
+                var discount = unitPrice * quantity * offer.DiscountRate;
+
+                var discountStatement = new DiscountStatement(
+                    product, 
+                    $"{offer.DiscountRate.ToString("P1", CultureInfo.InvariantCulture)} off ",
+                    discount * -1
+                    );
+
+                receipt.AddDiscountStatement(discountStatement);
             }
             else 
             {
-                next.HandleOffer(receipt, product, quantity, catalog); 
+                next.HandleOffer(receipt, specialOffers, product, quantity, catalog); 
             }
         }
     }

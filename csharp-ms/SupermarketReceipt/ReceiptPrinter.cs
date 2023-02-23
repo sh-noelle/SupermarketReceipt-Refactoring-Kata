@@ -49,10 +49,10 @@ namespace SupermarketReceipt
             return FormatLineWithWhitespace(name, value);
         }
 
-        private string PrintDiscount(Discount discount)
+        private string PrintDiscount(DiscountStatement discountStatement)
         {
-            string name = discount.Description + "(" + discount.Product.Name + ")";
-            string value = PrintPrice(discount.DiscountAmount);
+            string name = discountStatement.Description + "(" + discountStatement.Product.Name + ")";
+            string value = PrintPrice(discountStatement.DiscountAmount);
 
             return FormatLineWithWhitespace(name, value);
         }

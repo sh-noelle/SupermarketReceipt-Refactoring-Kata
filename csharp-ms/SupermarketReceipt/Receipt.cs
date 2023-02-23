@@ -5,7 +5,7 @@ namespace SupermarketReceipt
 {
     public class Receipt
     {
-        public readonly List<Discount> _discounts = new List<Discount>();
+        public readonly List<DiscountStatement> _discounts = new List<DiscountStatement>();
         public readonly List<ReceiptItem> _items = new List<ReceiptItem>();
 
         public double GetTotalPrice()
@@ -16,9 +16,9 @@ namespace SupermarketReceipt
             return Math.Round(total,3);
         }
 
-        public void AddProduct(Product p, double quantity, double price, double totalPrice)
+        public void AddProduct(Product product, double quantity, double price, double totalPrice)
         {
-            _items.Add(new ReceiptItem(p, quantity, price, totalPrice));
+            _items.Add(new ReceiptItem(product, quantity, price, totalPrice));
         }
 
         public List<ReceiptItem> GetItems()
@@ -26,12 +26,12 @@ namespace SupermarketReceipt
             return new List<ReceiptItem>(_items);
         }
 
-        public void AddDiscount(Discount discount)
+        public void AddDiscountStatement(DiscountStatement discount)
         {
             _discounts.Add(discount);
         }
 
-        public List<Discount> GetDiscounts()
+        public List<DiscountStatement> GetDiscounts()
         {
             return _discounts;
         }
@@ -39,9 +39,9 @@ namespace SupermarketReceipt
 
     public class ReceiptItem
     {
-        public ReceiptItem(Product p, double quantity, double price, double totalPrice)
+        public ReceiptItem(Product product, double quantity, double price, double totalPrice)
         {
-            Product = p;
+            Product = product;
             Quantity = quantity;
             Price = price;
             TotalPrice = totalPrice;

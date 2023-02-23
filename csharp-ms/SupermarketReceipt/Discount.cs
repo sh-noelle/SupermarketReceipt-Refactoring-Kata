@@ -1,8 +1,8 @@
 namespace SupermarketReceipt
 {
-    public class Discount
+    public class DiscountStatement
     {
-        public Discount(Product product, string description, double discountAmount)
+        public DiscountStatement(Product product, string description, double discountAmount)
         {
             Product = product;
             Description = description;

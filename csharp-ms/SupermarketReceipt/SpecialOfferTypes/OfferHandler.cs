@@ -12,6 +12,6 @@ namespace SupermarketReceipt.SpecialOfferTypes
         {
             this.next = next;
         }
-        public abstract void HandleOffer(Receipt receipt, Product product, int quantity, SupermarketCatalog catalog);
+        public abstract void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, int quantity, SupermarketCatalog catalog);
     }
 }

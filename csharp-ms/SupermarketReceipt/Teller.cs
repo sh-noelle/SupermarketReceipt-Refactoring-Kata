@@ -12,26 +12,26 @@ namespace SupermarketReceipt
             _catalog = catalog;
         }
 
-        public void AddSpecialOffer(SpecialOfferType offerType, Product product, double argument)
+        public void AddSpecialOffer(SpecialOfferCategories offerType, Product product, int sizeOfGrouping, double discountRate, double sellingPrice)
         {
-            _offers[product] = new Offer(offerType, product, argument);
+            _offers[product] = new Offer(offerType, product, sizeOfGrouping, discountRate, sellingPrice);
         }
 
         public Receipt ChecksOutArticlesFrom(ShoppingCart theCart)
         {
             var receipt = new Receipt();
             var productQuantities = theCart.GetItems();
-            foreach (var pq in productQuantities)
+            foreach (var productQuantity in productQuantities)
             {
-                var p = pq.Product;
-                var quantity = pq.Quantity;
-                var unitPrice = _catalog.GetUnitPrice(p);
+                var product = productQuantity.Product;
+                var quantity = productQuantity.Quantity;
+                var unitPrice = _catalog.GetUnitPrice(product);
                 var price = quantity * unitPrice;
-                receipt.AddProduct(p, quantity, unitPrice, price);
+                receipt.AddProduct(product, quantity, unitPrice, price);
             }
 
             theCart.HandleOffers(receipt, _offers, _catalog);
-
+           
             return receipt;
         }
     }

@@ -1,3 +1,4 @@
+using SupermarketReceipt.SpecialOfferTypes;
 using System;
 using System.Collections.Generic;
 
@@ -7,14 +8,14 @@ namespace SupermarketReceipt
     {
         public List<ProductQuantity> _items = new List<ProductQuantity>();
         public Dictionary<Product, double> _productQuantities = new Dictionary<Product, double>();
-        public List<SpecialOfferModel> _specialOfferList = new List<SpecialOfferModel> 
-        {
-             new SpecialOfferModel{ OfferType = SpecialOfferType.TenPercentDiscount, GroupingNumber = 1, Labelling = "10% off Discount" },
-             new SpecialOfferModel{ OfferType = SpecialOfferType.TwentyPercentDiscount, GroupingNumber = 1, Labelling = "20% off Discount"},
-             new SpecialOfferModel{ OfferType = SpecialOfferType.GetOneFree, GroupingNumber = 2, Labelling = "Buy one get one free"},
-             new SpecialOfferModel{ OfferType = SpecialOfferType.TwoForAmount, GroupingNumber = 2, Labelling = "Buy two for"},
-             new SpecialOfferModel{ OfferType = SpecialOfferType.FiveForAmount, GroupingNumber = 5, Labelling = "Buy five for"},
-        };
+        //public List<SpecialOfferModel> _specialOfferList = new List<SpecialOfferModel> 
+        //{
+        //     new SpecialOfferModel{ OfferType = SpecialOfferCategories.TenPercentDiscount, GroupingNumber = 1, Labelling = "10% off Discount" },
+        //     new SpecialOfferModel{ OfferType = SpecialOfferCategories.TwentyPercentDiscount, GroupingNumber = 1, Labelling = "20% off Discount"},
+        //     new SpecialOfferModel{ OfferType = SpecialOfferCategories.GetOneFree, GroupingNumber = 2, Labelling = "Buy one get one free"},
+        //     new SpecialOfferModel{ OfferType = SpecialOfferCategories.TwoForAmount, GroupingNumber = 2, Labelling = "Buy two for"},
+        //     new SpecialOfferModel{ OfferType = SpecialOfferCategories.FiveForAmount, GroupingNumber = 5, Labelling = "Buy five for"},
+        //};
 
         public ShoppingCart() 
         {
@@ -45,73 +46,25 @@ namespace SupermarketReceipt
             }
         }
 
-        public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> specialOffers, SupermarketCatalog catalog)
+
+    public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> specialOffers, SupermarketCatalog catalog)
+    {
+            var fiveItemsForSaleHandler = new AmountForSpecificPriceHandler();
+            var twoItemsForSaleHandler = new AmountForSpecificPriceHandler();
+            var buyOneGetOneHandler = new BuyItemsGetItemsFreeHandler();
+            var tenPercentDiscountHandler = new SpecificPercentDiscountHandler();
+            var twentyPercentDiscountHandler = new SpecificPercentDiscountHandler();
+
+            fiveItemsForSaleHandler.SetNext(twoItemsForSaleHandler);
+            twoItemsForSaleHandler.SetNext(buyOneGetOneHandler);
+            buyOneGetOneHandler.SetNext(twentyPercentDiscountHandler);
+            twentyPercentDiscountHandler.SetNext(tenPercentDiscountHandler);
+
+        foreach (var product in _productQuantities.Keys)
         {
-            foreach (var product in _productQuantities.Keys)
-            {
-                var quantity = (int) _productQuantities[product];
-                var unitPrice = catalog.GetUnitPrice(product);
-                Discount discount = null;
-                if (!specialOffers.ContainsKey(product)) 
-                {
-                    //throw new ArgumentException("Special offers do not cover the product.");
-                    //var total = quantity * unitPrice;
-                    discount = null;
-                }
-                //foreach (KeyValuePair<SpecialOfferType, int> specialOfferItem in _specialOfferDictionary) 
-                //{
-                //    var groupingNum = specialOfferItem.Value;
-                    
-                //    if (quantity >= groupingNum)
-                //    {
-                //        //throw new ArgumentException("Quantity should be equal to or bigger than groupingNum");
-                //    }
-                //}
-                
-                if (specialOffers.ContainsKey(product))
-                {
-                    var offer = specialOffers[product];
-                    
-                    
-                    var groupingNum = 1;
-                    if (offer.OfferType == SpecialOfferType.ThreeForTwo)
-                    {
-                        groupingNum = 3;
-                    }
-                    else if (offer.OfferType == SpecialOfferType.TwoForAmount)
-                    {
-                        groupingNum = 2;
-
-                        {
-                            var total = offer.Argument * (quantity / groupingNum) + quantity % 2 * unitPrice;
-                            var discountN = unitPrice * quantity - total;
-                            discount = new Discount(product, "2 for " + offer.Argument, -discountN);
-                        }
-                    }
-
-                    if (offer.OfferType == SpecialOfferType.FiveForAmount) groupingNum = 5;
-                    var numberOfXs = quantity / groupingNum;
-                    if (offer.OfferType == SpecialOfferType.ThreeForTwo && quantity > 2)
-                    {
-                        var discountAmount = quantity * unitPrice - (numberOfXs * 2 * unitPrice + quantity % 3 * unitPrice);
-                        discount = new Discount(product, "3 for 2", -discountAmount);
-                    }
-
-                    if (offer.OfferType == SpecialOfferType.TenPercentDiscount) 
-                    {
-                        discount = new Discount(product, offer.Argument + "% off", -quantity * unitPrice * offer.Argument / 100.0);
-                    }
-                        
-                    if (offer.OfferType == SpecialOfferType.FiveForAmount && quantity >= 5)
-                    {
-                        var discountTotal = unitPrice * quantity - (offer.Argument * numberOfXs + quantity % 5 * unitPrice);
-                        discount = new Discount(product, groupingNum + " for " + offer.Argument, -discountTotal);
-                    }
-
-                    if (discount != null)
-                        receipt.AddDiscount(discount);
-                }
-            }
+            var quantity = (int)_productQuantities[product];
+            fiveItemsForSaleHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
         }
     }
+}
 }

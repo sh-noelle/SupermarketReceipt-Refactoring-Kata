@@ -6,7 +6,7 @@ namespace SupermarketReceipt
 {
     public class SpecialOfferModel
     {
-        public SpecialOfferType OfferType { get; set; }
+        public SpecialOfferCategories OfferType { get; set; }
         public int GroupingNumber { get; set;}
         public string Labelling { get; set;}
     }
