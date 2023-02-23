@@ -18,7 +18,7 @@ namespace SupermarketReceipt.OfferTypes.SpecialOffers
                 var discountStatement = new DiscountStatement(
                     product,
                     $"{offer.DiscountRate.ToString("P1", CultureInfo.InvariantCulture)} off",
-                    discount * -1
+                    discount
                     );
 
                 receipt.AddDiscountStatement(discountStatement);

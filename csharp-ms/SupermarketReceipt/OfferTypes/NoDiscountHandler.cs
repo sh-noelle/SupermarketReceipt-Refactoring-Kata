@@ -16,7 +16,7 @@ namespace SupermarketReceipt.OfferTypes
                 var discountStatement = new DiscountStatement(
                         product,
                         "Marked price",
-                        discount * -1
+                        discount
                         );
                 receipt.AddDiscountStatement(discountStatement);
             }

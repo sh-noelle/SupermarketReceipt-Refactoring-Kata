@@ -6,24 +6,24 @@ namespace SupermarketReceipt
     public class Receipt
     {
         public readonly List<DiscountStatement> _discounts = new List<DiscountStatement>();
-        public readonly List<ReceiptItem> _items = new List<ReceiptItem>();
+        public readonly List<ReceiptItem> _receiptItems = new List<ReceiptItem>();
 
         public double GetTotalPrice()
         {
-            var total = 0.0;
-            foreach (var item in _items) total += item.TotalPrice;
-            foreach (var discount in _discounts) total += discount.DiscountAmount;
-            return Math.Round(total,3);
+            var totalPrice = 0.0;
+            foreach (var item in _receiptItems) totalPrice += item.TotalPrice;
+            foreach (var discount in _discounts) totalPrice += (-discount.DiscountAmount);
+            return Math.Round(totalPrice,3);
         }
 
         public void AddProduct(Product product, double quantity, double price, double totalPrice)
         {
-            _items.Add(new ReceiptItem(product, quantity, price, totalPrice));
+            _receiptItems.Add(new ReceiptItem(product, quantity, price, totalPrice));
         }
 
         public List<ReceiptItem> GetItems()
         {
-            return new List<ReceiptItem>(_items);
+            return new List<ReceiptItem>(_receiptItems);
         }
 
         public void AddDiscountStatement(DiscountStatement discount)

@@ -63,9 +63,9 @@ namespace SupermarketReceipt.Test
             // ARRANGE
             var apples = new Product("apples", ProductUnit.Kilo);
             var unitPrice = 1.99;
-            var quantity = 2.5;
+            var quantity = 1;
             var expectedDiscount = 0.80;
-            var expectedTotalPrice = quantity * unitPrice * expectedDiscount;
+            var expectedTotalPrice = Math.Round(quantity * unitPrice * expectedDiscount, 3);
 
             _catalog.AddProduct(apples, unitPrice);
             _cart.AddItemQuantity(apples, quantity);

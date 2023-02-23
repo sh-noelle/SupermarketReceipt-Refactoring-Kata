@@ -22,7 +22,7 @@ namespace SupermarketReceipt.OfferTypes.SpecialOffers
                 var discountStatement = new DiscountStatement(
                     product,
                     $"{offer.SizeOfGrouping} for {offer.SellingPrice}",
-                    discount * -1
+                    discount
                     );
 
                 receipt.AddDiscountStatement(discountStatement);
