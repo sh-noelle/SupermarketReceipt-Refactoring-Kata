@@ -10,7 +10,7 @@ namespace SupermarketReceipt.OfferTypes
         public override void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, double quantity, SupermarketCatalog catalog)
         {
             var offer = specialOffers[product];
-            if (offer.OfferType == SpecialOfferCategories.NoDiscount) 
+            if (offer.OfferType == SupermarketReceipt.SpecialOffers.NoDiscount) 
             {
                 var discount = 0;
                 var discountStatement = new DiscountStatement(
@@ -19,10 +19,14 @@ namespace SupermarketReceipt.OfferTypes
                         discount
                         );
                 receipt.AddDiscountStatement(discountStatement);
+                if (nextHandler != null) 
+                {
+                    nextHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
+                }
             }
-            else
+            else if(nextHandler != null)
             {
-                next.HandleOffer(receipt, specialOffers, product, quantity, catalog);
+                nextHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
             }
         }
     }

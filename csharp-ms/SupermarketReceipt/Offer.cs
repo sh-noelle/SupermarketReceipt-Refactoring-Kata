@@ -1,10 +1,12 @@
 namespace SupermarketReceipt
 {
-    public enum SpecialOfferCategories
+    public enum SpecialOffers
     {
         BuyItemsGetItemsFree,
-        SpecificPercentDiscount,
-        AmountForSpecificPrice,
+        TenPercentDiscount,
+        TwentyPercentDiscount,
+        TwoItemsForSpecificPrice,
+        FiveItemsForSpecificPrice,
         NoDiscount
     }
 
@@ -12,7 +14,7 @@ namespace SupermarketReceipt
     {
         private Product _product;
 
-        public Offer(SpecialOfferCategories offerType, Product product, int sizeOfGrouping, double discountRate, double sellingPrice)
+        public Offer(SpecialOffers offerType, Product product, int sizeOfGrouping, double discountRate, double sellingPrice)
         {
             OfferType = offerType;
             SizeOfGrouping = sizeOfGrouping;
@@ -21,7 +23,7 @@ namespace SupermarketReceipt
             _product = product;
         }
 
-        public SpecialOfferCategories OfferType { get; }
+        public SpecialOffers OfferType { get; }
         public int SizeOfGrouping { get; }
         public double DiscountRate { get; }
         public double SellingPrice { get; }

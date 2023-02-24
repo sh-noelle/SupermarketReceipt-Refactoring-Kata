@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace SupermarketReceipt.OfferTypes.SpecialOffers
+namespace SupermarketReceipt.OfferTypes.SpecialOfferCategories
 {
     public class SpecificPercentDiscountHandler : OfferHandlerBase
     {
         public override void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, double quantity, SupermarketCatalog catalog)
         {
             var offer = specialOffers[product];
-            if (offer.OfferType == SpecialOfferCategories.SpecificPercentDiscount)
+            if (offer.OfferType == SpecialOffers.TenPercentDiscount || offer.OfferType == SpecialOffers.TwentyPercentDiscount)
             {
                 var unitPrice = catalog.GetUnitPrice(product);
                 var discount = unitPrice * quantity * offer.DiscountRate;
@@ -22,10 +22,15 @@ namespace SupermarketReceipt.OfferTypes.SpecialOffers
                     );
 
                 receipt.AddDiscountStatement(discountStatement);
+                if (nextHandler != null) 
+                {
+                    nextHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
+                }
+
             }
-            else
+            else if(nextHandler != null)
             {
-                next.HandleOffer(receipt, specialOffers, product, quantity, catalog);
+                nextHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
             }
         }
     }

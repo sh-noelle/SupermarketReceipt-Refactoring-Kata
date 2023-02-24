@@ -1,4 +1,4 @@
-using SupermarketReceipt.OfferTypes.SpecialOffers;
+using SupermarketReceipt.OfferTypes.SpecialOfferCategories;
 using SupermarketReceipt.OfferTypes;
 using System;
 using System.Collections.Generic;
@@ -42,23 +42,19 @@ namespace SupermarketReceipt
 
     public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> specialOffers, SupermarketCatalog catalog)
     {
-            var fiveItemsForSaleHandler = new AmountForSpecificPriceHandler();
-            var twoItemsForSaleHandler = new AmountForSpecificPriceHandler();
-            var buyOneGetOneHandler = new BuyItemsGetItemsFreeHandler();
-            var tenPercentDiscountHandler = new SpecificPercentDiscountHandler();
-            var twentyPercentDiscountHandler = new SpecificPercentDiscountHandler();
+            var amountForSpecificPriceHandler = new AmountForSpecificPriceHandler();
+            var buyItemsGetItemsFreeHandler = new BuyItemsGetItemsFreeHandler();
+            var specificPercentDiscountHandler = new SpecificPercentDiscountHandler();
             var noDiscountHandler = new NoDiscountHandler();
 
-            fiveItemsForSaleHandler.SetNext(twoItemsForSaleHandler);
-            twoItemsForSaleHandler.SetNext(buyOneGetOneHandler);
-            buyOneGetOneHandler.SetNext(twentyPercentDiscountHandler);
-            twentyPercentDiscountHandler.SetNext(tenPercentDiscountHandler);
-            tenPercentDiscountHandler.SetNext(noDiscountHandler);
+            amountForSpecificPriceHandler.SetNext(buyItemsGetItemsFreeHandler);
+            buyItemsGetItemsFreeHandler.SetNext(specificPercentDiscountHandler);
+            specificPercentDiscountHandler.SetNext(noDiscountHandler);
 
         foreach (var product in _productQuantities.Keys)
         {
             var quantity = (int)_productQuantities[product];
-            fiveItemsForSaleHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
+            amountForSpecificPriceHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
         }
     }
 }
