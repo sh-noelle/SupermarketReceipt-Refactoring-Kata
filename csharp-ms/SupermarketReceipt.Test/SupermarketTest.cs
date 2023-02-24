@@ -15,6 +15,7 @@ namespace SupermarketReceipt.Test
         private SupermarketCatalog _catalog;
         private ShoppingCart _cart;
         private Teller _teller;
+        private Dictionary<Product, Offer> _mockOffers;
         private SpecialOfferCategories _buyOneGetOneFree = SpecialOfferCategories.BuyItemsGetItemsFree;
         private SpecialOfferCategories _tenPercentDiscount = SpecialOfferCategories.SpecificPercentDiscount;
         private SpecialOfferCategories _twentyPercentDiscount = SpecialOfferCategories.SpecificPercentDiscount;
@@ -27,6 +28,7 @@ namespace SupermarketReceipt.Test
             _catalog = new FakeCatalog();
             _cart = new ShoppingCart();
             _teller = new Teller(_catalog);
+            _mockOffers = new Dictionary<Product, Offer>();
         }
 
         // Originally enum SpecialOfferType do not have GetOneFree & TwentyPercentDiscount.
@@ -58,7 +60,7 @@ namespace SupermarketReceipt.Test
         }
 
         [Fact]
-        public void TwentyPercentDiscount_oneProductInCart_ReturnsTwentyPercentDiscountValue() 
+        public void TwentyPercentDiscount_oneKindProductInCart_ReturnsTwentyPercentDiscountValue() 
         {
             // ARRANGE
             var apples = new Product("apples", ProductUnit.Kilo);
@@ -85,7 +87,7 @@ namespace SupermarketReceipt.Test
         }
 
         [Fact]
-        public void TenPercentDiscount_oneProductInCart_ReturnsTenPercentDiscountValue()
+        public void TenPercentDiscount_oneKindProductInCart_ReturnsTenPercentDiscountValue()
         {
             // ARRANGE
             var rice = new Product("rice", ProductUnit.Each);
@@ -111,7 +113,7 @@ namespace SupermarketReceipt.Test
         }
 
         [Fact]
-        public void TenPercentDiscount_severalProductsInCart_ReturnsTenPercentDiscountValue()
+        public void TenPercentDiscount_severalKindsProductsInCart_ReturnsTenPercentDiscountValue()
         {
             // ARRANGE
             var rice = new Product("rice", ProductUnit.Each);
@@ -149,7 +151,7 @@ namespace SupermarketReceipt.Test
         }
 
         [Fact]
-        public void FiveForAmount_oneProductInCart_ReturnsFiveForAmountValue() 
+        public void FiveForAmount_oneKindProductInCart_ReturnsFiveForAmountValue() 
         {
             // ARRANGE
             var toothPaste = new Product("toothpaste", ProductUnit.Each);
@@ -175,7 +177,7 @@ namespace SupermarketReceipt.Test
         }
 
         [Fact]
-        public void FiveForAmount_severalProductsInCart_ReturnsFiveForAmountValue()
+        public void FiveForAmount_severalKindsProductsInCart_ReturnsFiveForAmountValue()
         {
             // ARRANGE
             var toothPaste = new Product("toothpaste", ProductUnit.Each);
@@ -213,7 +215,7 @@ namespace SupermarketReceipt.Test
 
 
         [Fact]
-        public void TwoForAmount_oneProductInCart_ReturnsTwoForAmountValue() 
+        public void TwoForAmount_oneKindProductInCart_ReturnsTwoForAmountValue() 
         {
             // ARRANGE
             var cherryTomatoes = new Product("cherry tomatoes", ProductUnit.Each);
@@ -239,7 +241,7 @@ namespace SupermarketReceipt.Test
         }
 
         [Fact]
-        public void TwoForAmount_severalProductsInCart_ReturnsTwoForAmountValue()
+        public void TwoForAmount_severalKindsProductsInCart_ReturnsTwoForAmountValue()
         {
             // ARRANGE
             var cherryTomatoes = new Product("cherry tomatoes", ProductUnit.Each);
@@ -276,14 +278,23 @@ namespace SupermarketReceipt.Test
             Assert.Equal(expectedTotalPrice, receipt.GetTotalPrice());
         }
 
-        [Fact]
-        public void NoDiscount_oneProductInCart_ReturnNoDiscountValue()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        [InlineData(4)]
+        [InlineData(5)]
+        [InlineData(10)]
+        [InlineData(11)]
+        [InlineData(99)]
+        [InlineData(100)]
+        public void NoDiscount_oneKindProductInCart_ReturnNoDiscountValue(double quantity1)
         {
             // ARRANGE
             var orange = new Product("orange", ProductUnit.Each);
             var unitPriceOfOrange = 0.69;
-            var quantityOfOrange = 2;
-            var expectedTotalPrice = unitPriceOfOrange * quantityOfOrange;
+            var quantityOfOrange = quantity1;
+            var expectedTotalPrice = Math.Round(unitPriceOfOrange * quantityOfOrange, 3);
 
             _catalog.AddProduct(orange, unitPriceOfOrange);
             _cart.AddItemQuantity(orange, quantityOfOrange);
@@ -301,18 +312,29 @@ namespace SupermarketReceipt.Test
             Assert.Equal(expectedTotalPrice, receipt.GetTotalPrice());
         }
 
-        [Fact]
-        public void NoDiscount_severalProductsInCart_ReturnNoDiscountValue() 
+        [Theory]
+        [InlineData(1,1)]
+        [InlineData(2,2)]
+        [InlineData(3,3)]
+        [InlineData(4,4)]
+        [InlineData(5, 5)]
+        [InlineData(10, 10)]
+        [InlineData(11, 11)]
+        [InlineData(99, 99)]
+        [InlineData(100, 100)]
+        [InlineData(1.5, 1.5)]
+        [InlineData(2.5, 3.5)]
+        public void NoDiscount_severalKindsProductsInCart_ReturnNoDiscountValue(double quantity1, double quantity2) 
         {
             // ARRANGE
-            var orange = new Product("orange", ProductUnit.Each);
-            var lemon = new Product("lemon", ProductUnit.Each);
+            var orange = new Product("orange", ProductUnit.Kilo);
+            var lemon = new Product("lemon", ProductUnit.Kilo);
 
             var unitPriceOfOrange = 0.69;
             var unitPriceOfLemon = 0.77;
-            var quantityOfOrange = 2;
-            var quantityOfLemon = 2;
-            var expectedTotalPrice = unitPriceOfOrange * quantityOfOrange + unitPriceOfLemon * quantityOfLemon;
+            var quantityOfOrange = quantity1;
+            var quantityOfLemon = quantity2;
+            var expectedTotalPrice = Math.Round(unitPriceOfOrange * quantityOfOrange + unitPriceOfLemon * quantityOfLemon, 3);
 
             _catalog.AddProduct(orange, unitPriceOfOrange);
             _catalog.AddProduct(lemon, unitPriceOfLemon);
@@ -774,6 +796,132 @@ namespace SupermarketReceipt.Test
             Assert.Equal(quantityOfLemon, receiptItem2.Quantity);
             Assert.Equal(expectedTotalPrice, receipt.GetTotalPrice());
         }
+
+        [Fact]
+        public void SpecialOfferStoredDataOutput_TwoItems_EachItemWithOneOffer_ReturnsOutputInXXXOrder()
+        {
+            // ARRANGE
+            var orange = new Product("orange", ProductUnit.Each);
+            var lemon = new Product("lemon", ProductUnit.Each);
+            var avocado = new Product("avocado", ProductUnit.Each);
+
+            var unitPriceOfOrange = 0.69;
+            var unitPriceOfLemon = 0.77;
+            var unitPriceOfAvocado = 1.15;
+            
+            var quantityOfOrange = 2;
+            var quantityOfLemon = 2;
+            var quantityOfAvocado = 2;
+
+            // automatically round up to 3 decimal places
+            // no blocking on cases like [1, 5], [1, 1] or [12,1]
+
+            _teller._offers = _mockOffers;
+            // ACT
+            _catalog.AddProduct(orange, unitPriceOfOrange);
+            _catalog.AddProduct(lemon, unitPriceOfLemon);
+            _catalog.AddProduct(avocado, unitPriceOfAvocado);
+            _cart.AddItemQuantity(orange, quantityOfOrange);
+            _cart.AddItemQuantity(lemon, quantityOfLemon);
+            _cart.AddItemQuantity(avocado, quantityOfAvocado);
+            _teller.AddSpecialOffer(_twoItemsForSale, orange, 2, 0, 1.02);
+            _teller.AddSpecialOffer(_tenPercentDiscount, lemon, 1, 0.10, 0);
+            _teller.AddSpecialOffer(_twentyPercentDiscount, avocado, 1, 0.20, 0);
+
+            var expectedOrangeOffer = new Offer(_twoItemsForSale, orange, 2, 0, 1.02);
+            var expectedLemonOffer = new Offer(_tenPercentDiscount, lemon, 1, 0.10, 0);
+            var expectedAvocadoOffer = new Offer(_twentyPercentDiscount, avocado, 1, 0.20, 0);
+
+            _output.WriteLine($"dictionary 1st key: {_teller._offers.First().Key.Name}; 1st value: " +
+                $"discountRate - {_teller._offers.First().Value.DiscountRate}; " +
+                $"offerType - {_teller._offers.First().Value.OfferType}; " + 
+                $"sellingPrice - {_teller._offers.First().Value.SellingPrice}; " +
+                $"sizeOfGrouping - {_teller._offers.First().Value.SizeOfGrouping}");
+
+            _output.WriteLine($"dictionary 2nd key: {_teller._offers.Keys.ToList()[1].Name}; 2nd value: " +
+                $"discountRate - {_teller._offers.Values.ToList()[1].DiscountRate}; " +
+                $"offerType - {_teller._offers.Values.ToList()[1].OfferType}; " +
+                $"sellingPrice - {_teller._offers.Values.ToList()[1].SellingPrice}; " +
+                $"sizeOfGrouping - {_teller._offers.Values.ToList()[1].SizeOfGrouping}");
+
+            _output.WriteLine($"dictionary 3rd key: {_teller._offers.Keys.ToList()[2].Name}; 3rd value: " +
+                $"discountRate - {_teller._offers.Values.ToList()[2].DiscountRate}; " +
+                $"offerType - {_teller._offers.Values.ToList()[2].OfferType}; " +
+                $"sellingPrice - {_teller._offers.Values.ToList()[2].SellingPrice}; " +
+                $"sizeOfGrouping - {_teller._offers.Values.ToList()[2].SizeOfGrouping}");
+
+            // ASSERT
+            // Dictionary<Product, Offer>
+            Assert.Equal(orange, _teller._offers.First().Key);
+            Assert.Equal(expectedOrangeOffer.DiscountRate, _teller._offers.First().Value.DiscountRate);
+            Assert.Equal(expectedOrangeOffer.OfferType, _teller._offers.First().Value.OfferType);
+            Assert.Equal(expectedOrangeOffer.SellingPrice, _teller._offers.First().Value.SellingPrice);
+            Assert.Equal(expectedOrangeOffer.SizeOfGrouping, _teller._offers.First().Value.SizeOfGrouping);
+
+            Assert.Equal(lemon, _teller._offers.Keys.ToList()[1]);
+            Assert.Equal(expectedLemonOffer.DiscountRate, _teller._offers.Values.ToList()[1].DiscountRate);
+            Assert.Equal(expectedLemonOffer.OfferType, _teller._offers.Values.ToList()[1].OfferType);
+            Assert.Equal(expectedLemonOffer.SellingPrice, _teller._offers.Values.ToList()[1].SellingPrice);
+            Assert.Equal(expectedLemonOffer.SizeOfGrouping, _teller._offers.Values.ToList()[1].SizeOfGrouping);
+
+            Assert.Equal(avocado, _teller._offers.Keys.ToList()[2]);
+            Assert.Equal(expectedAvocadoOffer.DiscountRate, _teller._offers.Values.ToList()[2].DiscountRate);
+            Assert.Equal(expectedAvocadoOffer.OfferType, _teller._offers.Values.ToList()[2].OfferType);
+            Assert.Equal(expectedAvocadoOffer.SellingPrice, _teller._offers.Values.ToList()[2].SellingPrice);
+            Assert.Equal(expectedAvocadoOffer.SizeOfGrouping, _teller._offers.Values.ToList()[2].SizeOfGrouping);
+
+        }
+
+        [Fact]
+        public void SpecialOfferStoredDataOutput_TwoItems_OneItemWithMultipleOffers_ReturnsOutputInXXXOrder()
+        {
+            // ARRANGE
+            var orange = new Product("orange", ProductUnit.Each);
+            var lemon = new Product("lemon", ProductUnit.Each);
+
+            var unitPriceOfOrange = 0.69;
+            var unitPriceOfLemon = 0.77;
+            var quantityOfOrange = 2;
+            var quantityOfLemon = 2;
+            // automatically round up to 3 decimal places
+            // no blocking on cases like [1, 5], [1, 1] or [12,1]
+
+            _catalog.AddProduct(orange, unitPriceOfOrange);
+            _catalog.AddProduct(lemon, unitPriceOfLemon);
+            _cart.AddItemQuantity(orange, quantityOfOrange);
+            _cart.AddItemQuantity(lemon, quantityOfLemon);
+            _teller.AddSpecialOffer(_twoItemsForSale, orange, 2, 0, 1.02);
+            _teller.AddSpecialOffer(_tenPercentDiscount, lemon, 1, 0.10, 0);
+            _teller.AddSpecialOffer(_fiveItemsForSale, lemon, 5, 0, 3.05);
+
+            // ACT
+
+            var expectedOrangeOffer = new Offer(_twoItemsForSale, orange, 2, 0, 1.02);
+
+            _output.WriteLine($"dictionary's count: {_teller._offers.Count}");
+
+            _output.WriteLine($"dictionary 1st key: {_teller._offers.First().Key.Name}; 1st value: " +
+                $"discountRate - {_teller._offers.First().Value.DiscountRate}; " +
+                $"offerType - {_teller._offers.First().Value.OfferType}; " +
+                $"sellingPrice - {_teller._offers.First().Value.SellingPrice}; " +
+                $"sizeOfGrouping - {_teller._offers.First().Value.SizeOfGrouping}");
+
+            _output.WriteLine($"dictionary 2nd key: {_teller._offers.Keys.ToList()[1].Name}; 2nd value: " +
+                $"discountRate - {_teller._offers.Values.ToList()[1].DiscountRate}; " +
+                $"offerType - {_teller._offers.Values.ToList()[1].OfferType}; " +
+                $"sellingPrice - {_teller._offers.Values.ToList()[1].SellingPrice}; " +
+                $"sizeOfGrouping - {_teller._offers.Values.ToList()[1].SizeOfGrouping}");
+
+
+            // ASSERT
+            Assert.Equal(2, _teller._offers.Count);
+            Assert.Equal(orange, _teller._offers.First().Key);
+            Assert.Equal(expectedOrangeOffer.DiscountRate, _teller._offers.First().Value.DiscountRate);
+            Assert.Equal(expectedOrangeOffer.OfferType, _teller._offers.First().Value.OfferType);
+            Assert.Equal(expectedOrangeOffer.SellingPrice, _teller._offers.First().Value.SellingPrice);
+            Assert.Equal(expectedOrangeOffer.SizeOfGrouping, _teller._offers.First().Value.SizeOfGrouping);
+        }
+
     }
 }
 
