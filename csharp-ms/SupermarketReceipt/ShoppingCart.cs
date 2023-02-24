@@ -1,7 +1,7 @@
-using SupermarketReceipt.OfferTypes.SpecialOfferCategories;
 using SupermarketReceipt.OfferTypes;
 using System;
 using System.Collections.Generic;
+using SupermarketReceipt.OfferTypes.SpecialOfferHandling;
 
 namespace SupermarketReceipt
 {

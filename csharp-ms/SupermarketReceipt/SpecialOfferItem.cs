@@ -6,7 +6,9 @@ namespace SupermarketReceipt
 {
     public class SpecialOfferItem
     {
-        public Product Product { get; set; }
-        public Offer Offer { get; set;}
+        public string SpecialOffer { get; set; }
+        public SpecialOfferCategories Categories { get; set;}
+        public int SizeOfGrouping { get; set; }
+        public double DiscountRate { get; set; }
     }
 }

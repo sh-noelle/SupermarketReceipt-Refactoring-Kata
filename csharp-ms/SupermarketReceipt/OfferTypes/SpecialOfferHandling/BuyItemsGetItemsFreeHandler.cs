@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace SupermarketReceipt.OfferTypes.SpecialOfferCategories
+namespace SupermarketReceipt.OfferTypes.SpecialOfferHandling
 {
     public class BuyItemsGetItemsFreeHandler : OfferHandlerBase
     {
         public override void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, double quantity, SupermarketCatalog catalog)
         {
             var offer = specialOffers[product];
-            if (offer.OfferType == SpecialOffers.BuyItemsGetItemsFree)
+            if (offer.OfferType == SpecialOfferCategories.BuyItemsGetItemsFree)
             {
                 var unitPrice = catalog.GetUnitPrice(product);
                 var groupedProduct = Math.Floor(quantity / offer.SizeOfGrouping);

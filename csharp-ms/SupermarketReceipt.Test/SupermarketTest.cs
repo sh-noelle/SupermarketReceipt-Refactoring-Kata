@@ -16,12 +16,12 @@ namespace SupermarketReceipt.Test
         private ShoppingCart _cart;
         private Teller _teller;
         private Dictionary<Product, Offer> _mockOffers;
-        private SpecialOffers _buyOneGetOneFree = SpecialOffers.BuyItemsGetItemsFree;
-        private SpecialOffers _tenPercentDiscount = SpecialOffers.SpecificPercentDiscount;
-        private SpecialOffers _twentyPercentDiscount = SpecialOffers.SpecificPercentDiscount;
-        private SpecialOffers _twoItemsForSale = SpecialOffers.ItemsForSales;
-        private SpecialOffers _fiveItemsForSale = SpecialOffers.ItemsForSales;
-        private SpecialOffers _noDiscount = SpecialOffers.NoDiscount;
+        private SpecialOfferCategories _buyOneGetOneFree = SpecialOfferCategories.BuyItemsGetItemsFree;
+        private SpecialOfferCategories _tenPercentDiscount = SpecialOfferCategories.SpecificPercentDiscount;
+        private SpecialOfferCategories _twentyPercentDiscount = SpecialOfferCategories.SpecificPercentDiscount;
+        private SpecialOfferCategories _twoItemsForSale = SpecialOfferCategories.ItemsForSales;
+        private SpecialOfferCategories _fiveItemsForSale = SpecialOfferCategories.ItemsForSales;
+        private SpecialOfferCategories _noDiscount = SpecialOfferCategories.NoDiscount;
         public SupermarketTest(ITestOutputHelper output) 
         {
             _output = output;
