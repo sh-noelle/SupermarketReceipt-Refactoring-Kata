@@ -10,7 +10,7 @@ namespace SupermarketReceipt.OfferTypes.SpecialOfferCategories
         public override void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, double quantity, SupermarketCatalog catalog)
         {
             var offer = specialOffers[product];
-            if (offer.OfferType == SpecialOffers.TwoItemsForSpecificPrice || offer.OfferType == SpecialOffers.FiveItemsForSpecificPrice)
+            if (offer.OfferType == SpecialOffers.AmountForSpecificPrice)
             {
                 var unitPrice = catalog.GetUnitPrice(product);
                 var groupedProduct = Math.Floor(quantity / offer.SizeOfGrouping);
@@ -26,14 +26,11 @@ namespace SupermarketReceipt.OfferTypes.SpecialOfferCategories
                     );
 
                 receipt.AddDiscountStatement(discountStatement);
-                if (nextHandler != null) 
-                {
-                    nextHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
-                }                   
+                PasstoNextHandler(receipt, specialOffers, product, quantity, catalog);
             }
-            else if(nextHandler != null)
+            else 
             {
-                nextHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
+                PasstoNextHandler(receipt, specialOffers, product, quantity, catalog);
             }
         }
     }

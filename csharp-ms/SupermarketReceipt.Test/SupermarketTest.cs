@@ -17,10 +17,10 @@ namespace SupermarketReceipt.Test
         private Teller _teller;
         private Dictionary<Product, Offer> _mockOffers;
         private SpecialOffers _buyOneGetOneFree = SpecialOffers.BuyItemsGetItemsFree;
-        private SpecialOffers _tenPercentDiscount = SpecialOffers.TenPercentDiscount;
-        private SpecialOffers _twentyPercentDiscount = SpecialOffers.TenPercentDiscount;
-        private SpecialOffers _twoItemsForSale = SpecialOffers.TwoItemsForSpecificPrice;
-        private SpecialOffers _fiveItemsForSale = SpecialOffers.FiveItemsForSpecificPrice;
+        private SpecialOffers _tenPercentDiscount = SpecialOffers.SpecificPercentDiscount;
+        private SpecialOffers _twentyPercentDiscount = SpecialOffers.SpecificPercentDiscount;
+        private SpecialOffers _twoItemsForSale = SpecialOffers.AmountForSpecificPrice;
+        private SpecialOffers _fiveItemsForSale = SpecialOffers.AmountForSpecificPrice;
         private SpecialOffers _noDiscount = SpecialOffers.NoDiscount;
         public SupermarketTest(ITestOutputHelper output) 
         {

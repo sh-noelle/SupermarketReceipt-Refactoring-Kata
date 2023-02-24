@@ -3,10 +3,8 @@ namespace SupermarketReceipt
     public enum SpecialOffers
     {
         BuyItemsGetItemsFree,
-        TenPercentDiscount,
-        TwentyPercentDiscount,
-        TwoItemsForSpecificPrice,
-        FiveItemsForSpecificPrice,
+        SpecificPercentDiscount,
+        AmountForSpecificPrice,
         NoDiscount
     }
 

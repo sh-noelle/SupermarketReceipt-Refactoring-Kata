@@ -26,14 +26,11 @@ namespace SupermarketReceipt.OfferTypes.SpecialOfferCategories
                     );
 
                 receipt.AddDiscountStatement(discountStatement);
-                if (nextHandler != null) 
-                {
-                    nextHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
-                }
+                PasstoNextHandler(receipt, specialOffers, product, quantity, catalog);
             }
-            else if(nextHandler != null)
+            else 
             {
-                nextHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
+                PasstoNextHandler(receipt, specialOffers, product, quantity, catalog);
             }
         }
     }
