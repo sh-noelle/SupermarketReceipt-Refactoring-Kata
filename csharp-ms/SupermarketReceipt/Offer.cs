@@ -4,7 +4,7 @@ namespace SupermarketReceipt
     {
         BuyItemsGetItemsFree,
         SpecificPercentDiscount,
-        AmountForSales,
+        ItemsForSales,
         NoDiscount
     }
 

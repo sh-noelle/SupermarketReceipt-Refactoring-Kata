@@ -19,8 +19,8 @@ namespace SupermarketReceipt.Test
         private SpecialOffers _buyOneGetOneFree = SpecialOffers.BuyItemsGetItemsFree;
         private SpecialOffers _tenPercentDiscount = SpecialOffers.SpecificPercentDiscount;
         private SpecialOffers _twentyPercentDiscount = SpecialOffers.SpecificPercentDiscount;
-        private SpecialOffers _twoItemsForSale = SpecialOffers.AmountForSales;
-        private SpecialOffers _fiveItemsForSale = SpecialOffers.AmountForSales;
+        private SpecialOffers _twoItemsForSale = SpecialOffers.ItemsForSales;
+        private SpecialOffers _fiveItemsForSale = SpecialOffers.ItemsForSales;
         private SpecialOffers _noDiscount = SpecialOffers.NoDiscount;
         public SupermarketTest(ITestOutputHelper output) 
         {

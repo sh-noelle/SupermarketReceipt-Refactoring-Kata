@@ -37,7 +37,7 @@ namespace SupermarketReceipt.Test
 
             _mockOffer = new Dictionary<Product, Offer>();
             _mockOffer.Add(new Product("icecream", ProductUnit.Each), new Offer(SpecialOffers.SpecificPercentDiscount, new Product("icecream", ProductUnit.Each), 1, 0.10, 0)); // tenPercentDiscount
-            _mockOffer.Add(new Product("cream puff", ProductUnit.Each), new Offer(SpecialOffers.AmountForSales, new Product("cream puff", ProductUnit.Each), 5, 0, 4.50)); // fiveItemForSale 
+            _mockOffer.Add(new Product("cream puff", ProductUnit.Each), new Offer(SpecialOffers.ItemsForSales, new Product("cream puff", ProductUnit.Each), 5, 0, 4.50)); // fiveItemForSale 
             _mockOffer.Add(new Product("souffle", ProductUnit.Each), new Offer(SpecialOffers.SpecificPercentDiscount, new Product("souffle", ProductUnit.Each), 1, 0.20 , 0)); // twentyPercentDiscount
 
             _mockReceiptItemList = new List<ReceiptItem>();
