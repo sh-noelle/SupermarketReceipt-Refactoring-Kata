@@ -8,7 +8,6 @@ namespace SupermarketReceipt
         NoDiscount
     }
 
-
     public class Offer
     {
         private Product _product;

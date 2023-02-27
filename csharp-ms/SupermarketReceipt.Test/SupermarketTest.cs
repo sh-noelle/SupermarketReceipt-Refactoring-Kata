@@ -15,7 +15,6 @@ namespace SupermarketReceipt.Test
         private SupermarketCatalog _catalog;
         private ShoppingCart _cart;
         private Teller _teller;
-        private Dictionary<Product, Offer> _mockOffers;
         private List<SpecialOfferItem> _mockSpecialOfferList;
         public SupermarketTest(ITestOutputHelper output) 
         {
@@ -23,7 +22,6 @@ namespace SupermarketReceipt.Test
             _catalog = new FakeCatalog();
             _cart = new ShoppingCart();
             _teller = new Teller(_catalog);
-            _mockOffers = new Dictionary<Product, Offer>();
             _mockSpecialOfferList = new List<SpecialOfferItem> {
             new SpecialOfferItem{ SpecialOffer = "BuyOneGetOneFree", Categories = SpecialOfferCategories.BuyItemsGetItemsFree, SizeOfGrouping = 2, DiscountRate = 0 },
             new SpecialOfferItem{ SpecialOffer = "BuyTwoGetOneFree", Categories = SpecialOfferCategories.BuyItemsGetItemsFree, SizeOfGrouping = 3, DiscountRate = 0 },
@@ -34,7 +32,7 @@ namespace SupermarketReceipt.Test
             new SpecialOfferItem{ SpecialOffer = "TwentyFivePercentDiscount", Categories = SpecialOfferCategories.SpecificPercentDiscount, SizeOfGrouping = 1, DiscountRate = 0.25},
             new SpecialOfferItem{ SpecialOffer = "ThirtyPercentDiscount", Categories = SpecialOfferCategories.SpecificPercentDiscount, SizeOfGrouping = 1, DiscountRate = 0.30},
             new SpecialOfferItem{ SpecialOffer = "TwoItemsForSale", Categories = SpecialOfferCategories.ItemsForSales, SizeOfGrouping = 2, DiscountRate = 0 },
-            new SpecialOfferItem{ SpecialOffer = "FiveItemsForSale", Categories = SpecialOfferCategories.ItemsForSales, SizeOfGrouping = 2, DiscountRate = 0 },
+            new SpecialOfferItem{ SpecialOffer = "FiveItemsForSale", Categories = SpecialOfferCategories.ItemsForSales, SizeOfGrouping = 5, DiscountRate = 0 },
             new SpecialOfferItem{ SpecialOffer = "NoDiscount", Categories = SpecialOfferCategories.NoDiscount, SizeOfGrouping = 1, DiscountRate = 0},
             };
         }
