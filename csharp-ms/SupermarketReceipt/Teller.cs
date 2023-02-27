@@ -17,7 +17,7 @@ namespace SupermarketReceipt
         public void AddSpecialOffer(string offerType, Product product, double sellingPrice)
         {
             var specialOffer = _specialOfferList.FirstOrDefault(offer => offer.SpecialOffer == offerType);
-            _offers[product] = new Offer(specialOffer, product);
+            _offers[product] = new Offer(specialOffer, product, sellingPrice);
         }
 
         public Receipt ChecksOutArticlesFrom(ShoppingCart theCart)
