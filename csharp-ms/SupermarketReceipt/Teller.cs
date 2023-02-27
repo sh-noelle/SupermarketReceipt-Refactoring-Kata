@@ -13,9 +13,9 @@ namespace SupermarketReceipt
             _catalog = catalog;
         }
 
-        public void AddSpecialOffer(SpecialOfferCategories offerType, Product product, int sizeOfGrouping, double discountRate, double sellingPrice)
+        public void AddSpecialOffer(SpecialOfferItem offerType, Product product, double sellingPrice)
         {
-            _offers[product] = new Offer(offerType, product, sizeOfGrouping, discountRate, sellingPrice);
+            _offers[product] = new Offer(offerType, product, sellingPrice);
         }
 
         public Receipt ChecksOutArticlesFrom(ShoppingCart theCart)
