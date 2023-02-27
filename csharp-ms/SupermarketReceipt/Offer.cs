@@ -27,4 +27,5 @@ namespace SupermarketReceipt
         public double DiscountRate { get; }
         public double SellingPrice { get; }
     }
+
 }

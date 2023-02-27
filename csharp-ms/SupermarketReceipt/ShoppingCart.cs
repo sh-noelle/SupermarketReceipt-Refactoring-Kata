@@ -40,7 +40,7 @@ namespace SupermarketReceipt
         }
 
 
-    public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> specialOffers, SupermarketCatalog catalog)
+    public void HandleOffers(Receipt receipt, List<SpecialOfferItem> specialOfferList, Dictionary<Product, Offer> specialOffers, SupermarketCatalog catalog)
     {
             var amountForSpecificPriceHandler = new AmountForSpecificPriceHandler();
             var buyItemsGetItemsFreeHandler = new BuyItemsGetItemsFreeHandler();
@@ -54,7 +54,7 @@ namespace SupermarketReceipt
         foreach (var product in _productQuantities.Keys)
         {
             var quantity = (int)_productQuantities[product];
-            amountForSpecificPriceHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
+            amountForSpecificPriceHandler.HandleOffer(receipt, specialOfferList, specialOffers, product, quantity, catalog);
         }
     }
 }

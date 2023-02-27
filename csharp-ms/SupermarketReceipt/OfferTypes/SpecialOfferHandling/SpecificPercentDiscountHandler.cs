@@ -7,7 +7,7 @@ namespace SupermarketReceipt.OfferTypes.SpecialOfferHandling
 {
     public class SpecificPercentDiscountHandler : OfferHandlerBase
     {
-        public override void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, double quantity, SupermarketCatalog catalog)
+        public override void HandleOffer(Receipt receipt, List<SpecialOfferItem> specialOfferList, Dictionary<Product, Offer> specialOffers, Product product, double quantity, SupermarketCatalog catalog)
         {
             var offer = specialOffers[product];
             if (offer.OfferType == SpecialOfferCategories.SpecificPercentDiscount)
@@ -24,13 +24,13 @@ namespace SupermarketReceipt.OfferTypes.SpecialOfferHandling
                 receipt.AddDiscountStatement(discountStatement);
                 if (nextHandler != null) 
                 {
-                    nextHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
+                    nextHandler.HandleOffer(receipt, specialOfferList, specialOffers, product, quantity, catalog);
                 }
 
             }
             else if(nextHandler != null)
             {
-                nextHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
+                nextHandler.HandleOffer(receipt, specialOfferList, specialOffers, product, quantity, catalog);
             }
         }
     }

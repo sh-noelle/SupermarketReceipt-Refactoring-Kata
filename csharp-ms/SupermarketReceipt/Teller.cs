@@ -5,6 +5,7 @@ namespace SupermarketReceipt
     public class Teller
     {
         private readonly SupermarketCatalog _catalog;
+        public List<SpecialOfferItem> _specialOfferList= new List<SpecialOfferItem>();
         public Dictionary<Product, Offer> _offers = new Dictionary<Product, Offer>();
 
         public Teller(SupermarketCatalog catalog)
@@ -30,7 +31,7 @@ namespace SupermarketReceipt
                 receipt.AddProduct(product, quantity, unitPrice, price);
             }
 
-            theCart.HandleOffers(receipt, _offers, _catalog);
+            theCart.HandleOffers(receipt, _specialOfferList, _offers, _catalog);
            
             return receipt;
         }

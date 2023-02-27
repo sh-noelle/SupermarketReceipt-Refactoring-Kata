@@ -12,13 +12,13 @@ namespace SupermarketReceipt.OfferTypes
         {
             this.nextHandler = nextHandler;
         }
-        public abstract void HandleOffer(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, double quantity, SupermarketCatalog catalog);
+        public abstract void HandleOffer(Receipt receipt, List<SpecialOfferItem> specialOfferList, Dictionary<Product, Offer> specialOffers, Product product, double quantity, SupermarketCatalog catalog);
 
-        public void PasstoNextHandler(Receipt receipt, Dictionary<Product, Offer> specialOffers, Product product, double quantity, SupermarketCatalog catalog) 
+        public void PasstoNextHandler(Receipt receipt, List<SpecialOfferItem> specialOfferList, Dictionary<Product, Offer> specialOffers, Product product, double quantity, SupermarketCatalog catalog) 
         {
             if (nextHandler != null)
             {
-                nextHandler.HandleOffer(receipt, specialOffers, product, quantity, catalog);
+                nextHandler.HandleOffer(receipt, specialOfferList, specialOffers, product, quantity, catalog);
             }
         }
     }
