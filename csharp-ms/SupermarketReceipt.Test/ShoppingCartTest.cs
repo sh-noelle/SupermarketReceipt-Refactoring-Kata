@@ -15,6 +15,7 @@ namespace SupermarketReceipt.Test
         private List<ProductQuantity> _mockItems;
         private Dictionary<Product, double> _mockProductQuantities;
         private Dictionary<Product, Offer> _mockOffer;
+        private List<SpecialOfferItem> _mockSpecialOfferList;
         private List<ReceiptItem> _mockReceiptItemList;
 
 
@@ -35,10 +36,11 @@ namespace SupermarketReceipt.Test
             _mockProductQuantities.Add(new Product("watermelon", ProductUnit.Each), 2.0);
             _mockProductQuantities.Add(new Product("banana", ProductUnit.Kilo), 1.5);
 
+
             _mockOffer = new Dictionary<Product, Offer>();
-            _mockOffer.Add(new Product("icecream", ProductUnit.Each), new Offer(SpecialOfferCategories.SpecificPercentDiscount, new Product("icecream", ProductUnit.Each), 1, 0.10, 0)); // tenPercentDiscount
-            _mockOffer.Add(new Product("cream puff", ProductUnit.Each), new Offer(SpecialOfferCategories.ItemsForSales, new Product("cream puff", ProductUnit.Each), 5, 0, 4.50)); // fiveItemForSale 
-            _mockOffer.Add(new Product("souffle", ProductUnit.Each), new Offer(SpecialOfferCategories.SpecificPercentDiscount, new Product("souffle", ProductUnit.Each), 1, 0.20 , 0)); // twentyPercentDiscount
+            //_mockOffer.Add(new Product("icecream", ProductUnit.Each), new Offer(SpecialOfferCategories.SpecificPercentDiscount, new Product("icecream", ProductUnit.Each), 1, 0.10, 0)); // tenPercentDiscount
+            //_mockOffer.Add(new Product("cream puff", ProductUnit.Each), new Offer(SpecialOfferCategories.ItemsForSales, new Product("cream puff", ProductUnit.Each), 5, 0, 4.50)); // fiveItemForSale 
+            //_mockOffer.Add(new Product("souffle", ProductUnit.Each), new Offer(SpecialOfferCategories.SpecificPercentDiscount, new Product("souffle", ProductUnit.Each), 1, 0.20 , 0)); // twentyPercentDiscount
 
             _mockReceiptItemList = new List<ReceiptItem>();
         }

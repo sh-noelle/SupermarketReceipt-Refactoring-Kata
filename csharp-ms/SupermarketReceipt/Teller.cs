@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SupermarketReceipt
 {
@@ -13,9 +14,10 @@ namespace SupermarketReceipt
             _catalog = catalog;
         }
 
-        public void AddSpecialOffer(SpecialOfferItem offerType, Product product, double sellingPrice)
+        public void AddSpecialOffer(string offerType, Product product, double sellingPrice)
         {
-            _offers[product] = new Offer(offerType, product, sellingPrice);
+            var specialOffer = _specialOfferList.FirstOrDefault(offer => offer.SpecialOffer == offerType);
+            _offers[product] = new Offer(specialOffer, product, sellingPrice);
         }
 
         public Receipt ChecksOutArticlesFrom(ShoppingCart theCart)

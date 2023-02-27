@@ -58,7 +58,7 @@ namespace SupermarketReceipt.Test
 
             _catalog.AddProduct(toothBrush, unitPrice);
             _cart.AddItemQuantity(toothBrush, quantity);
-            _teller.AddSpecialOffer(_buyOneGetOneFree, toothBrush, 2, 0, 0.99);
+            _teller.AddSpecialOffer("BuyOneGetOneFree", toothBrush, 2, 0, 0.99);
 
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);
