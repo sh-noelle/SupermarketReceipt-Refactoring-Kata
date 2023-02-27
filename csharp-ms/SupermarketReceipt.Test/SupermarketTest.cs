@@ -17,12 +17,6 @@ namespace SupermarketReceipt.Test
         private Teller _teller;
         private Dictionary<Product, Offer> _mockOffers;
         private List<SpecialOfferItem> _mockSpecialOfferList;
-        private SpecialOfferCategories _buyOneGetOneFree = SpecialOfferCategories.BuyItemsGetItemsFree;
-        private SpecialOfferCategories _tenPercentDiscount = SpecialOfferCategories.SpecificPercentDiscount;
-        private SpecialOfferCategories _twentyPercentDiscount = SpecialOfferCategories.SpecificPercentDiscount;
-        private SpecialOfferCategories _twoItemsForSale = SpecialOfferCategories.ItemsForSales;
-        private SpecialOfferCategories _fiveItemsForSale = SpecialOfferCategories.ItemsForSales;
-        private SpecialOfferCategories _noDiscount = SpecialOfferCategories.NoDiscount;
         public SupermarketTest(ITestOutputHelper output) 
         {
             _output = output;
@@ -58,7 +52,8 @@ namespace SupermarketReceipt.Test
 
             _catalog.AddProduct(toothBrush, unitPrice);
             _cart.AddItemQuantity(toothBrush, quantity);
-            _teller.AddSpecialOffer("BuyOneGetOneFree", toothBrush, 2, 0, 0.99);
+            _teller._specialOfferList = _mockSpecialOfferList;
+            _teller.AddSpecialOffer("BuyOneGetOneFree", toothBrush, 0.99);
 
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);
@@ -85,7 +80,8 @@ namespace SupermarketReceipt.Test
 
             _catalog.AddProduct(apples, unitPrice);
             _cart.AddItemQuantity(apples, quantity);
-            _teller.AddSpecialOffer(_twentyPercentDiscount, apples, 1, 0.20, 0);
+            _teller._specialOfferList = _mockSpecialOfferList;
+            _teller.AddSpecialOffer("TwentyPercentDiscount", apples, 0);
 
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);
@@ -112,7 +108,8 @@ namespace SupermarketReceipt.Test
             
             _catalog.AddProduct(rice, unitPrice);
             _cart.AddItemQuantity(rice, quantity);
-            _teller.AddSpecialOffer(_tenPercentDiscount, rice, 1, 0.10, 0);
+            _teller._specialOfferList = _mockSpecialOfferList;
+            _teller.AddSpecialOffer("TenPercentDiscount", rice, 0);
 
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);
@@ -146,8 +143,9 @@ namespace SupermarketReceipt.Test
             _catalog.AddProduct(noodle, unitPriceOfNoodle);
             _cart.AddItemQuantity(rice, quantityOfRice);
             _cart.AddItemQuantity(noodle, quantityOfNoodle);
-            _teller.AddSpecialOffer(_tenPercentDiscount, rice, 1, 0.10, 0);
-            _teller.AddSpecialOffer(_tenPercentDiscount, noodle, 1, 0.10, 0);
+            _teller._specialOfferList = _mockSpecialOfferList;
+            _teller.AddSpecialOffer("TenPercentDiscount", rice, 0);
+            _teller.AddSpecialOffer("TenPercentDiscount", noodle, 0);
 
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);
@@ -176,7 +174,8 @@ namespace SupermarketReceipt.Test
 
             _catalog.AddProduct(toothPaste, unitPrice);
             _cart.AddItemQuantity(toothPaste, quantity);
-            _teller.AddSpecialOffer(_fiveItemsForSale, toothPaste, 5, 0, 3.50);
+            _teller._specialOfferList = _mockSpecialOfferList;
+            _teller.AddSpecialOffer("FiveItemsForSale", toothPaste, 3.50);
 
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);
@@ -208,8 +207,9 @@ namespace SupermarketReceipt.Test
             _cart.AddItemQuantity(toothPaste, quantityOfToothPaste);
             _cart.AddItemQuantity(cupcake, quantityOfToothPaste);
 
-            _teller.AddSpecialOffer(_fiveItemsForSale, toothPaste, 5, 0, 7.49);
-            _teller.AddSpecialOffer(_fiveItemsForSale, cupcake, 5, 0, 3.0);
+            _teller._specialOfferList = _mockSpecialOfferList;
+            _teller.AddSpecialOffer("FiveItemsForSale", toothPaste, 7.49);
+            _teller.AddSpecialOffer("FiveItemsForSale", cupcake, 3.0);
 
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);
@@ -239,7 +239,8 @@ namespace SupermarketReceipt.Test
 
             _catalog.AddProduct(cherryTomatoes, unitPrice);
             _cart.AddItemQuantity(cherryTomatoes, quantity);
-            _teller.AddSpecialOffer(_twoItemsForSale, cherryTomatoes, 2, 0, 0.99);
+            _teller._specialOfferList = _mockSpecialOfferList;
+            _teller.AddSpecialOffer("TwoItemsForSale", cherryTomatoes, 0.99);
 
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);
@@ -273,8 +274,9 @@ namespace SupermarketReceipt.Test
             _cart.AddItemQuantity(cherryTomatoes, quantityOfCherryTomatoes);
             _cart.AddItemQuantity(cherryBlossoms, quantityOfCherryBlossoms);
 
-            _teller.AddSpecialOffer(_twoItemsForSale, cherryTomatoes, 2, 0, 0.99);
-            _teller.AddSpecialOffer(_twoItemsForSale, cherryBlossoms, 2, 0, 1.05);
+            _teller._specialOfferList = _mockSpecialOfferList;
+            _teller.AddSpecialOffer("TwoItemsForSale", cherryTomatoes, 0.99);
+            _teller.AddSpecialOffer("TwoItemsForSale", cherryBlossoms, 1.05);
 
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);
@@ -312,7 +314,8 @@ namespace SupermarketReceipt.Test
 
             _catalog.AddProduct(orange, unitPriceOfOrange);
             _cart.AddItemQuantity(orange, quantityOfOrange);
-            _teller.AddSpecialOffer(_noDiscount, orange, 1, 0, 0);
+            _teller._specialOfferList = _mockSpecialOfferList;
+            _teller.AddSpecialOffer("NoDiscount", orange, 0);
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);
             var receiptItem = receipt.GetItems()[0];
@@ -354,8 +357,9 @@ namespace SupermarketReceipt.Test
             _catalog.AddProduct(lemon, unitPriceOfLemon);
             _cart.AddItemQuantity(orange, quantityOfOrange);
             _cart.AddItemQuantity(lemon, quantityOfLemon);
-            _teller.AddSpecialOffer(_noDiscount, orange, 1, 0, 0);
-            _teller.AddSpecialOffer(_noDiscount, lemon, 1, 0, 0);
+            _teller._specialOfferList = _mockSpecialOfferList;
+            _teller.AddSpecialOffer("NoDiscount", orange, 0);
+            _teller.AddSpecialOffer("NoDiscount", lemon, 0);
 
             // ACT
             var receipt = _teller.ChecksOutArticlesFrom(_cart);

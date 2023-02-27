@@ -33,7 +33,7 @@ namespace SupermarketReceipt
                 receipt.AddProduct(product, quantity, unitPrice, price);
             }
 
-            theCart.HandleOffers(receipt, _specialOfferList, _offers, _catalog);
+            theCart.HandleOffers(receipt, _offers, _catalog);
            
             return receipt;
         }
