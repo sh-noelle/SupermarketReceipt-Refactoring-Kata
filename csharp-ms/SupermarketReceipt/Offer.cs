@@ -13,15 +13,13 @@ namespace SupermarketReceipt
     {
         private Product _product;
 
-        public Offer(SpecialOfferItem offerType, Product product, double sellingPrice)
+        public Offer(SpecialOfferItem offerType, Product product)
         {
             OfferType = offerType;
-            SellingPrice = sellingPrice;
             _product = product;
         }
 
         public SpecialOfferItem OfferType { get; }
-        public double SellingPrice { get; }
         public Product Product { get; }
     }
 
